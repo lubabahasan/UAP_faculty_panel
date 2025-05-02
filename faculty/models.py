@@ -36,7 +36,7 @@ class Faculty(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, default="Name")
-    shortname = models.CharField(max_length=5, default='N/A')
+    shortname = models.CharField(max_length=5, default='N/A', blank=True)
     designation = models.CharField(max_length=20, choices=DESIGNATION_CHOICES, null=True)
     phone = models.CharField(max_length=11)
     bio = models.TextField(max_length=200)

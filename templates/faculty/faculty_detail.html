@@ -6,45 +6,110 @@
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/faculty_detail.css' %}">
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
+
+    <link href="https://cdn.jsdelivr.net/npm/@iconscout/unicons/css/unicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block content %}
 
+<style>
+    .social-icons {
+        display: flex;
+        gap: 20px;
+    }
+
+    .social-icons a {
+        text-decoration: none;
+        padding: 10px;
+        font-size: 28px;
+        color: #333;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-icons a:hover {
+        color: #007bff;
+        transform: scale(1.1);
+    }
+
+    .social-icons i {
+        vertical-align: middle;
+    }
+
+    .faculty-info {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px 0px;
+        border: 1px solid #ddd;
+    }
+
+</style>
+
 
 <div class="container faculty-profile">
 
-    <div class="row align-items-center">
-        <div class="col-md-4 text-center">
+   <div class="row align-items-center" style="padding-right: 20px;">
+
+        <!-- Profile Picture Section -->
+        <div class="col-md-3 text-center">
             <img src="{{ faculty_profile.profile_pic.url }}" alt="Profile Picture" class="profile-img">
         </div>
-        <div class="col-md-8 faculty-info">
-            <h1>{{ faculty_profile.name }}</h1>
-            <h5>{{ faculty_profile.designation }}</h5>
 
-            <div class="faculty-meta">
-                <div><strong>Short Name:</strong> {{ faculty_profile.shortname }}</div>
+        <!-- Faculty Info Section -->
+        <div class="col-md-9 faculty-info">
+            <div class="d-flex justify-content-between">
+                <!-- Left Section (Name and Designation, faculty meta) -->
+                <div>
+                    <h1>{{ faculty_profile.name }}</h1>
+                    <h5>{{ faculty_profile.designation }}</h5>
+                    <div class="faculty-meta">
+<!--                <div><strong>Short Name:</strong> {{ faculty_profile.shortname }}</div>-->
                 <div><strong>Phone:</strong> {{ faculty_profile.phone }}</div>
                 <div><strong>Joining Date:</strong> {{ faculty_profile.joining_date }}</div>
 
-                {% if faculty_profile.google_scholar_url %}
-                <div><strong>Google Scholar:</strong> <a href="{{ faculty_profile.google_scholar_url }}" target="_blank">View Profile</a></div>
-                {% endif %}
-                {% if faculty_profile.research_gate_url %}
-                <div><strong>Research Gate:</strong> <a href="{{ faculty_profile.research_gate_url }}" target="_blank">View Profile</a></div>
-                {% endif %}
-                {% if faculty_profile.orcid_url %}
-                <div><strong>Orcid:</strong> <a href="{{ faculty_profile.orcid_url }}" target="_blank">View Profile</a></div>
-                {% endif %}
-                {% if faculty_profile.scopus_url %}
-                <div><strong>Scopus:</strong> <a href="{{ faculty_profile.scopus_url }}" target="_blank">View Profile</a></div>
-                {% endif %}
-                {% if faculty_profile.linkedin_url %}
-                <div><strong>LinkedIn:</strong> <a href="{{ faculty_profile.linkedin_url }}" target="_blank">View Profile</a></div>
-                {% endif %}
+                <!-- Social Links -->
+                <div class="social-icons">
+                    {% if faculty_profile.google_scholar_url %}
+                        <a href="{{ faculty_profile.google_scholar_url }}" target="_blank" title="Google Scholar">
+                            <i class="fab fa-google"></i> <!-- Google Scholar icon -->
+                        </a>
+                    {% endif %}
+                    {% if faculty_profile.research_gate_url %}
+                        <a href="{{ faculty_profile.research_gate_url }}" target="_blank" title="ResearchGate">
+                            <i class="fab fa-researchgate"></i> <!-- ResearchGate icon -->
+                        </a>
+                    {% endif %}
+                    {% if faculty_profile.orcid_url %}
+                        <a href="{{ faculty_profile.orcid_url }}" target="_blank" title="ORCID">
+                            <i class="fab fa-orcid"></i> <!-- ORCID icon -->
+                        </a>
+                    {% endif %}
+                    {% if faculty_profile.scopus_url %}
+                        <a href="{{ faculty_profile.scopus_url }}" target="_blank" title="Scopus">
+                            <i class="fab fa-searchengin"></i> <!-- Scopus icon (search engine icon) -->
+                        </a>
+                    {% endif %}
+                    {% if faculty_profile.linkedin_url %}
+                        <a href="{{ faculty_profile.linkedin_url }}" target="_blank" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i> <!-- LinkedIn icon -->
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+                </div>
+
+                <!-- Right Section (Short Name) on Medium Screens and Above -->
+                <div class="d-none d-md-block">
+                    <h1 class="gradient-text-global text-center fw-bold" style="font-size: 8rem; font-weight: bold; padding-right: 20px">{{ faculty_profile.shortname }}</h1>
+                </div>
             </div>
         </div>
     </div>
+
 
     <hr class="fat_hr">
 
@@ -68,7 +133,7 @@
         <div class="tab-pane fade show active" id="about" role="tabpanel">
             {{ faculty_profile.about|safe }}
         </div>
-        <div class="tab-pane fade show active" id="research" role="tabpanel">
+        <div class="tab-pane fade" id="research" role="tabpanel">
             <style>
                 .research-papers {
                     list-style: none;

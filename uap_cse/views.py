@@ -60,5 +60,7 @@ def research(request):
             'faculty': faculty,
             'papers': papers
         })
+
+    data.sort(key=lambda x: x['papers'][0]['citations'] if x['papers'] else 0, reverse=True)
     return render(request, 'research.html', {'faculty_data': data})
 
