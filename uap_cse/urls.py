@@ -38,6 +38,7 @@ urlpatterns = [
     path('tester/',views.tester,name='tester'),
     path('error/',views.error,name='error'),
     path('aca/',include('academics.urls')),
+    path('research/', views.research, name='research'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:

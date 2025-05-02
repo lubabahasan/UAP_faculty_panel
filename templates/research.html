@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Research Papers{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/faculty.css' %}">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <style>
+        .faculty-research {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        .faculty-research h1 {
+            font-size: 2rem;
+            text-align: center;
+            color: #5a4fcf;
+            margin-bottom: 30px;
+        }
+
+        .research-papers {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .paper {
+            border: 1px solid #e0e0e0;
+            border-left: 6px solid #5a4fcf;
+            background-color: #fafafa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .paper:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        }
+
+        .paper-title {
+            margin: 0 0 10px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .paper-meta {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .paper-meta span {
+            margin-right: 20px;
+        }
+
+        .paper-link {
+            display: inline-block;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            color: #fff;
+            background-color: #5a4fcf;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .paper-link:hover {
+            background-color: #483cb8;
+        }
+
+        .no-papers {
+            text-align: center;
+            font-style: italic;
+            color: #999;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="faculty-research">
+    {% if faculty_data %}
+        <ul class="research-papers">
+            {% for entry in faculty_data %}
+                {% for paper in entry.papers %}
+                    <li class="paper">
+                        <h3 class="paper-title">{{ paper.title }}</h3>
+                        <div class="paper-meta">
+                            <span class="year">📅 {{ paper.year }}</span>
+                            <span class="citations">📚 Citations: {{ paper.citations }}</span>
+                        </div>
+                        {% if paper.url %}
+                            <a href="{{ paper.url }}" target="_blank" class="paper-link">🔗 View Full Paper</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-papers">No research papers found.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

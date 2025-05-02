@@ -51,5 +51,14 @@ def error(request):
 def tester(request):
     return render(request, 'tester.html')
 
-
+def research(request):
+    facultys = Faculty.objects.all()  # Adjust this to match your model
+    data = []
+    for faculty in facultys:
+        papers = get_or_cache_best_papers(faculty.google_scholar_url)
+        data.append({
+            'faculty': faculty,
+            'papers': papers
+        })
+    return render(request, 'research.html', {'faculty_data': data})
 

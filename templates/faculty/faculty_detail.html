@@ -68,26 +68,87 @@
         <div class="tab-pane fade show active" id="about" role="tabpanel">
             {{ faculty_profile.about|safe }}
         </div>
-        <div class="tab-pane fade" id="research" role="tabpanel">
+        <div class="tab-pane fade show active" id="research" role="tabpanel">
+            <style>
+                .research-papers {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .paper {
+                    background: #f9f9ff;
+                    border: 1px solid #deddf7;
+                    border-left: 5px solid #6b5edf;
+                    border-radius: 12px;
+                    padding: 16px 20px;
+                    margin-bottom: 16px;
+                    transition: box-shadow 0.3s ease;
+                }
+
+                .paper:hover {
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+                }
+
+                .paper-title {
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                    color: #333;
+                }
+
+                .paper-meta {
+                    font-size: 0.9rem;
+                    color: #555;
+                    margin-bottom: 8px;
+                }
+
+                .paper-meta span {
+                    margin-right: 15px;
+                }
+
+                .paper-link {
+                    display: inline-block;
+                    font-size: 0.85rem;
+                    padding: 6px 12px;
+                    background-color: #6b5edf;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 6px;
+                }
+
+                .paper-link:hover {
+                    background-color: #584ac5;
+                }
+
+                .no-papers {
+                    text-align: center;
+                    font-style: italic;
+                    color: #888;
+                    padding: 20px 0;
+                }
+            </style>
+
             {% if faculty_profile %}
                 <ul class="research-papers">
                     {% for paper in papers %}
                         <li class="paper">
                             <h5 class="paper-title">{{ paper.title }}</h5>
                             <div class="paper-meta">
-                                <span class="year">Published: {{ paper.year }}</span>
-                                <span class="citations">Citations: {{ paper.citations }}</span>
+                                <span class="year">📅 {{ paper.year }}</span>
+                                <span class="citations">📚 Citations: {{ paper.citations }}</span>
                             </div>
                             {% if paper.url %}
-                                <a href="{{ paper.url }}" target="_blank" class="paper-link">View Paper</a>
+                                <a href="{{ paper.url }}" target="_blank" class="paper-link">🔗 View Paper</a>
                             {% endif %}
                         </li>
                     {% endfor %}
                 </ul>
             {% else %}
-                <p>No research papers found or Google Scholar profile not available.</p>
+                <p class="no-papers">No research papers found or Google Scholar profile not available.</p>
             {% endif %}
         </div>
+
         <div class="tab-pane fade" id="courses" role="tabpanel">
             {% if faculty_profile.course_file %}
                 <a href="{{ faculty_profile.course_file.url }}" target="_blank" class="btn btn-primary mt-2">Download Courses PDF</a>
